@@ -1,3 +1,3 @@
-class Comment < ActiveRecord::Base
+class Note < ActiveRecord::Base
 	validates :text, presence: true
 end
