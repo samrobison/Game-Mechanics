@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang = "en">
   <head>
-    <title>Impact Guides</title>
+    <title>Game Mechanics Wiki</title>
   <%= stylesheet_link_tag "application", media: "all",
                                            "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -34,24 +34,20 @@
 
   </head>
   <body>
-    <div class= "container">
-      <div class = "row">
+
 	      
-	      <div class = "col-md-3">
+	      <div class = "sidebar">
 	        <%= link_to "Home", root_path%>
 	        <br>
 	        search bar goes here
 	      </div>
 	      
 	      
-	      <div clas = "col-md-9">
-	      	<div class = "container">
+	      <div class = "main">
 	      		<%= yield %>
-	        </div>
 	      </div>
 
-      </div>
-    </div>
+
     
   </body>
 </html>

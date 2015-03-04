@@ -1,0 +1,19 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.sidebar {
+	background-color: red;
+	hight: 200%;
+	width: 20%;
+	position: absolute;
+	float: left;
+}
+
+.main{
+	position: relative;
+	margin-left: 25%;
+}
+
+html body { 
+height:100%; 
+}
