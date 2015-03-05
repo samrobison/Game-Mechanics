@@ -1,0 +1,52 @@
+<div class = "container">
+	<% if @mechanic.errors.any? %>
+	    <div id="error_explanation">
+		    <div class="alert alert-danger">
+		      The form contains <%= pluralize(@mechanic.errors.count, "error") %>.
+		    </div>
+		    <ul>
+			    <% @mechanic.errors.full_messages.each do |msg| %>
+			        <li><%= msg %></li>
+			    <% end %>
+		    </ul>
+	    </div>
+	<% end %>
+
+	<%= form_for @mechanic do |f|%>
+
+		<%=f.text_field :name, :placeholder => "Title", class: 'form-control'%>
+		<%=f.text_area :text, :placeholder => "description", class:  'form-control'%>
+		
+		
+		<%=f.fields_for :examples do |g|%>
+			<div class = "col-md-12">
+				<%=g.text_field :title, :placeholder => "Game's Title", class:  'form-control'%>
+			</div>
+			<div class = "col-md-8">
+				<%=g.text_area :text, :placeholder => "descripe the instance here", class:  'form-control'%>
+			</div>
+			<div class = "col-md 4">
+				Insert a picture of the mechanic in the game
+				<%=g.file_field :thumbnail %>
+			</div>
+			<div class = "col-md-12">
+				<%=g.text_field :link, :placeholder => "Link to game", class:  'form-control'%>
+			</div>
+		<%end%>
+
+		<%=f.fields_for :related_mechanics do |g| %>
+			<%= f.select :category_id, options_for_select(@array) %>
+		<%end%>
+
+		<%=f.fields_for :keywords do |g|%>
+			<%g.text_field :title, :placeholder => "Keywords", class:  'form-control'%>
+		<%end%>
+
+		<%=f.fields_for :notes do |g|%>
+			<%g.text_area :text, :placeholder => "notes", class:  'form-control'%>
+		<%end%>
+
+		
+		<%=f.submit "create mechanic", class: "btn btn-primary"%>
+	<%end%>
+</div>

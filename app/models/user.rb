@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
   has_many :roles, class_name: "UserRole", :dependent => :destroy
   has_many :recently_visited, class_name: "RecentlyVisited", :dependent => :destroy
 
+  accepts_nested_attributes_for :mechanics, :comments, :roles, :recently_visited 
+
 end

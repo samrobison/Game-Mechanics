@@ -7,4 +7,6 @@ class Mechanic < ActiveRecord::Base
 
 	validates :text, presence: true
 	validates :name, presence: true
+
+	accepts_nested_attributes_for :examples, :comments, :related_mechanics, :keywords, :notes
 end
