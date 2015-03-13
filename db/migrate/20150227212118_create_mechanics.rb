@@ -3,7 +3,8 @@ class CreateMechanics < ActiveRecord::Migration
     create_table :mechanics do |t|
       t.text :text
       t.string :name
-      t.integer :keyword_id, null: false
+      t.integer :keyword_id
+      t.integer :related_mechanic_id
 
       t.timestamps null: false
     end

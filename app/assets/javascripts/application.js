@@ -14,3 +14,62 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+function showExample(x)
+{
+	console.log("called");
+	for (var i = 1; i < x; i++) 
+	{
+		var id ="example";
+		id = id.concat(i);
+		if (document.getElementById(id) != null && document.getElementById(id).className.match(/(?:^|\s)hidden(?!\S)/) )  
+		{
+			document.getElementById(id).className = document.getElementById(id).className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			break;
+		}
+		else if(x == i+1)
+		{
+			alert("Too Many Examples!!");
+			break;
+		
+		}
+	}
+}
+
+function showKeyword(x)
+{
+	for (var i = 1; i < x; i++) 
+	{
+		var id ="keyword";
+		id = id.concat(i);
+		if (document.getElementById(id) != null && document.getElementById(id).className.match(/(?:^|\s)hidden(?!\S)/) ) 
+		{
+			document.getElementById(id).className = document.getElementById(id).className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			break;
+		}
+		else if(x == i+1)
+		{
+			alert("Too Many Keywords!!");
+			break;
+		}
+	}
+}
+
+function showNote(x)
+{
+	for (var i = 1; i < x; i++) 
+	{
+		var id ="note";
+		id = id.concat(i);
+		if (document.getElementById(id) != null && document.getElementById(id).className.match(/(?:^|\s)hidden(?!\S)/) ) 
+		{
+			document.getElementById(id).className = document.getElementById(id).className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			break;
+		}
+		else if(x == i+1)
+		{
+			alert("Too Many Notes!!");
+			break;
+		}
+	}
+}

@@ -15,36 +15,79 @@
 	<%= form_for @mechanic do |f|%>
 
 		<%=f.text_field :name, :placeholder => "Title", class: 'form-control'%>
+		<br>
 		<%=f.text_area :text, :placeholder => "description", class:  'form-control'%>
-		
+		<br>
 		
 		<%=f.fields_for :examples do |g|%>
-			<div class = "col-md-12">
-				<%=g.text_field :title, :placeholder => "Game's Title", class:  'form-control'%>
+			<% if @ecount > 0 %>
+				<div class = "row hidden" id = <%="example#{@ecount}"%> >
+			<% else %>
+				<div class = "row">
+			<%end%>
+			
+				<div class = "col-md-12">
+					<%=g.text_field :title, :placeholder => "Game's Title", class:  'form-control'%>
+				</div>
+				<div class = "col-md-8">
+					<%=g.text_area :text, :placeholder => "descripe the instance here", class:  'form-control'%>
+				</div>
+				<div class = "col-md 4">
+					Insert a picture of the mechanic in the game
+					<%=g.file_field :thumbnail %>
+				</div>
+				<div class = "col-md-12">
+					<%=g.text_field :link, :placeholder => "Link to game", class:  'form-control'%>
+				</div>
 			</div>
-			<div class = "col-md-8">
-				<%=g.text_area :text, :placeholder => "descripe the instance here", class:  'form-control'%>
-			</div>
-			<div class = "col-md 4">
-				Insert a picture of the mechanic in the game
-				<%=g.file_field :thumbnail %>
-			</div>
-			<div class = "col-md-12">
-				<%=g.text_field :link, :placeholder => "Link to game", class:  'form-control'%>
-			</div>
+
+			<% @ecount = @ecount + 1 %>
 		<%end%>
+		<a onclick="showExample(<%=@ex%>);">Add Another Example</a>
+
+		<br>
 
 		<%=f.fields_for :related_mechanics do |g| %>
-			<%= f.select :category_id, options_for_select(@array) %>
+			<div class = "row">
+ 				<div class = "col-md-12">
+ 					<%= g.select :title, options_for_select(@array) %>
+ 				</div>
+ 			</div>
 		<%end%>
+		<br>
+
+
 
 		<%=f.fields_for :keywords do |g|%>
-			<%g.text_field :title, :placeholder => "Keywords", class:  'form-control'%>
+			<% if @kcount > 0 %>
+				<div class = "row hidden" id = <%="keyword#{@kcount}"%> >
+			<% else %>
+				<div class = "row">
+			<%end%>
+				<div class = "col-md-12">
+					<%=g.text_field :title, :placeholder => "Keyword"%>
+				</div>
+			</div>
+			<% @kcount = @kcount + 1 %>
 		<%end%>
+		<a onclick="showKeyword(<%=@ke%>);">Add Another Keyword</a>
+		<br>
+
 
 		<%=f.fields_for :notes do |g|%>
-			<%g.text_area :text, :placeholder => "notes", class:  'form-control'%>
+			<% if @ncount > 0 %>
+				<div class = "row hidden" id = <%="note#{@ncount}"%> >
+			<% else %>
+				<div class = "row">
+			<%end%>
+			<div class = "col-md-12">
+					<%=g.text_area :text, :placeholder => "notes", class:  'form-control'%>
+				</div>
+			</div>
+			<% @ncount = @ncount + 1 %>
 		<%end%>
+		<a onclick="showNote(<%=@no%>);">Add Another Note</a>
+		<br>
 
 		
 		<%=f.submit "create mechanic", class: "btn btn-primary"%>

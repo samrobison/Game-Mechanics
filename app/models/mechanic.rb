@@ -6,7 +6,7 @@ class Mechanic < ActiveRecord::Base
 	has_many :notes, class_name: "Note", :dependent => :destroy
 
 	validates :text, presence: true
-	validates :name, presence: true
+	validates :name, presence: true, uniqueness: true
 
 	accepts_nested_attributes_for :examples, :comments, :related_mechanics, :keywords, :notes
 end
