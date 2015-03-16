@@ -63,13 +63,11 @@ class MechanicsController < ApplicationController
 			end
 		end
 
-		#this needs to updated at some point to search through all the keywords and use that one if it exists 
 		if params[:mechanic][:keywords_attributes]
 			params[:mechanic][:keywords_attributes].each do |k,x|
 				if x[:title] == ""
 					params[:mechanic][:keywords_attributes].delete(k)
 				end
-				#x.mechanics = @mechanic
 			end
 		end
 		
@@ -173,6 +171,23 @@ class MechanicsController < ApplicationController
 		@related = @mechanic.related_mechanics
 		@keywords = @mechanic.keywords
 		@notes = @mechanic.notes
+		@canEdit = authorized
+	end
+
+	def update
+		@mechanic = Mechanic.find(params[:id])
+		byebug
+		redirect_to @mechanic
+	end
+
+	private 
+	#do checks here to see if user is authorized to edit
+	def authorized
+		if current_user
+			return true
+		else
+			return false
+		end
 	end
 
 end

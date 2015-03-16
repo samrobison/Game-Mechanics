@@ -1,0 +1,106 @@
+ <div class = "container">
+ 	<%= form_for @mechanic, :html => { :multipart => true } do |f|%>
+ 	<div class = "row">
+ 		<div class = "col-md-12 mainTitle">
+ 			<%= @name %>
+ 		</div>
+ 	</div>
+ 		
+ 	<div class = "row">
+ 		<div class = "col-md-12 title">
+ 			 Description 
+ 		</div>
+ 	</div>
+	
+	<div class = "row">
+ 		<div class = "col-md-12" data-attr-name= "Mechanic[text]">
+ 			<%= @description %>
+ 		</div>
+ 		<div class = "col-md-12 hidden" id = "description" >
+ 			<%=f.text_area :text, value: @mechanic.text , class:  'form-control'%>
+ 		</div>
+ 	</div>
+ 	
+	<div class = "row">
+ 		<div class = "col-md-12 title">
+ 			Examples
+ 		</div>
+ 	</div>
+ 	<%c = 0%>
+ 	<% @examples.each do |x| %>
+		 <div class = "row title" data-attr-name= "Mechanic[exapmles][title][<%=c%>]" >
+	 		<div class = "col-md-12 subTitle" >
+	 			<%= x.title %>
+	 		</div>
+	 	</div>
+	
+
+	 	<div class = "row">
+	 		<div class = "col-md-8" data-attr-name= "Mechanic[exapmles][text][<%=c%>]">
+	 			<%= x.text %>
+	 		</div>
+	 		<div class = "col-md-4">
+	 			<%=image_tag x.thumbnail.url%>
+	 		</div>
+	 	</div>
+
+	 <%end%>
+	 
+	 <div class = "row">
+ 		<div class = "col-md-12 title">
+ 			Related Mechanics
+ 		</div>
+ 	</div>
+
+	 <div class = "row">
+	 	<ul>
+			<% @related.each do |x| %>
+				<li>
+					<%= link_to x.title, x.mechanic %>
+				</li>
+			<%end%>
+		</ul>
+	</div>
+
+	<div class = "row">
+ 		<div class = "col-md-12 title">
+ 			Keywords
+ 		</div>
+ 	</div>
+
+	<div class = "row">
+		<div class = "col-md-12">
+			<ul>
+				<% @keywords.each do |x| %>
+						<li><%=link_to x.title, '#' %></li>
+				<%end%>
+			</ul>
+		</div>
+	</div>
+	
+	<div class = "row">
+ 		<div class = "col-md-12 title">
+ 			Additional Information
+ 		</div>
+ 	</div>
+
+ 	<div class = "row">
+	 	<ul>
+			<% @notes.each do |x| %>
+				<li>
+					<%= x.text %>
+				</li>
+			<%end%>
+			<% @examples.each do |x| %>
+				<li>
+					<a href= <%=x.text%> > <%= "learn more about #{x.title} here!"%> </a>
+				</li>
+			<%end%>
+		</ul> 
+
+	</div>
+	<%=f.submit "create mechanic", class: "hidden btn btn-primary", id: "button"%>
+
+<%end%>
+
+ </div>

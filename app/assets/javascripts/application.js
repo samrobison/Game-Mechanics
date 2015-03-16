@@ -73,3 +73,50 @@ function showNote(x)
 		}
 	}
 }
+
+/*$(
+	$("body").on("click",function(){
+		$this = $(this);
+		
+		switch($this.attr("data-form-name")){
+			case "Mechanic[examples][0]":
+			console.log("works");
+			break;
+		}
+	}));
+
+*/
+$(document).ready(function(){
+    $("div").click(function(){
+        $this = $(this);
+        //console.log($this);
+        switch($this.attr("data-attr-name"))
+        {
+        	case "Mechanic[text]":
+        	//console.log("text");
+        	console.log($this);
+        	var text = document.getElementById("description");
+        	$this.addClass( "hidden" );
+        	text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+        	//text.$("textarea").height( $("textarea")[0].scrollHeight );
+        	$("#description textarea").focus();
+        	break;
+
+
+        	case "Mechanic[examples][0]":
+			console.log("works");
+			break;
+
+        }
+    });
+    $("textarea").focusout(function() {
+  	$(".btn").trigger( "click" );
+  	console.log($(".button"));
+  });
+
+});
+
+
+
+
+

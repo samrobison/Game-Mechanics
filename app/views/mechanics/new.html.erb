@@ -12,7 +12,7 @@
 	    </div>
 	<% end %>
 
-	<%= form_for @mechanic do |f|%>
+	<%= form_for @mechanic, :html => { :multipart => true } do |f|%>
 
 		<%=f.text_field :name, :placeholder => "Title", class: 'form-control'%>
 		<br>
