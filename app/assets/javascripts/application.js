@@ -93,25 +93,56 @@ $(document).ready(function(){
         switch($this.attr("data-attr-name"))
         {
         	case "Mechanic[text]":
-        	//console.log("text");
-        	console.log($this);
         	var text = document.getElementById("description");
         	$this.addClass( "hidden" );
         	text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
-        	//text.$("textarea").height( $("textarea")[0].scrollHeight );
+        	//text.children("textarea").height( $("textarea")[0].scrollHeight );
+
+        	$("#description textarea").height("200px");
         	$("#description textarea").focus();
         	break;
 
+        	case "Mechanic[exapmles][0][text]":
+			var text = document.getElementById("exampleText0");
+			$this.addClass("hidden");
+			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			$("#exampleText0 textarea").css( "min-height", "300px" );
+			$("#exampleText0 textarea").focus();
 
-        	case "Mechanic[examples][0]":
-			console.log("works");
+			break;
+
+			case "Mechanic[exapmles][1][text]":
+			var text = document.getElementById("exampleText1");
+			$this.addClass("hidden");
+			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			break;
+
+			case "Mechanic[exapmles][2][text]":
+			var text = document.getElementById("exampleText2");
+			$this.addClass("hidden");
+			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			break;
+
+			case "Mechanic[exapmles][3][text]":
+			var text = document.getElementById("exampleText3");
+			$this.addClass("hidden");
+			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+			break;
+
+			case "Mechanic[exapmles][4][text]":
+			var text = document.getElementById("exampleText4");
+			$this.addClass("hidden");
+			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
 			break;
 
         }
     });
     $("textarea").focusout(function() {
-  	$(".btn").trigger( "click" );
-  	console.log($(".button"));
+  	if ( !$('textarea').is(':focus'))
+  	{
+  		$(".btn").trigger( "click" );
+  		//console.log($(".button"));
+    }
   });
 
 });

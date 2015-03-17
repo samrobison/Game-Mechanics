@@ -172,12 +172,44 @@ class MechanicsController < ApplicationController
 		@keywords = @mechanic.keywords
 		@notes = @mechanic.notes
 		@canEdit = authorized
+		@showLinkE = false
+		@showLinkK = false
+		@showLinkN = false
+		@ex = @examples.length
+		(5-@examples.length).times do 
+			@mechanic.examples.build
+			@showLinkE = true
+		end
+		(5-@keywords.length).times do 
+			@mechanic.keywords.build
+			@showLinkK = true
+		end
+		(5-@notes.length).times do 
+			@mechanic.notes.build
+			@showLinkN = true
+		end
 	end
 
 	def update
 		@mechanic = Mechanic.find(params[:id])
-		byebug
-		redirect_to @mechanic
+		#byebug
+		if @mechanic.update(text: params[:mechanic][:text])
+			redirect_to @mechanic
+		else
+			@mechanic = Mechanic.find(params[:id])
+			@name = @mechanic.name
+			@description = @mechanic.text
+			@examples = @mechanic.examples
+			@related = @mechanic.related_mechanics
+			@keywords = @mechanic.keywords
+			@notes = @mechanic.notes
+			@canEdit = authorized
+			(5-@examples.length).times do 
+				@mechanic.examples.build
+			end
+			render 'show'
+		end
+
 	end
 
 	private 

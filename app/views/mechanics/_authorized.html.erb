@@ -1,5 +1,18 @@
  <div class = "container">
- 	<%= form_for @mechanic, :html => { :multipart => true } do |f|%>
+ 	<% if @mechanic.errors.any? %>
+	    <div id="error_explanation">
+		    <div class="alert alert-danger">
+		      The form contains <%= pluralize(@mechanic.errors.count, "error") %>.
+		    </div>
+		    <ul>
+			    <% @mechanic.errors.full_messages.each do |msg| %>
+			        <li><%= msg %></li>
+			    <% end %>
+		    </ul>
+	    </div>
+	<% end %>
+
+ 	<%= form_for @mechanic do |f|%>
  	<div class = "row">
  		<div class = "col-md-12 mainTitle">
  			<%= @name %>
@@ -27,23 +40,50 @@
  		</div>
  	</div>
  	<%c = 0%>
- 	<% @examples.each do |x| %>
-		 <div class = "row title" data-attr-name= "Mechanic[exapmles][title][<%=c%>]" >
-	 		<div class = "col-md-12 subTitle" >
-	 			<%= x.title %>
-	 		</div>
-	 	</div>
-	
+ 	
+	 <%=f.fields_for :examples do |g|%>
+	 	<%if @examples[c].title  %>
+		 	<div class = "row title" data-attr-name= "Mechanic[exapmles][<%=c%>][title]" >
+		 		<div class = "col-md-12 subTitle" >
+		 			<%= @examples[c].title %>
+		 		</div>
+		 	</div>
+		
+		 	<div class = "row">
+		 		<div class = "col-md-8" data-attr-name= "Mechanic[exapmles][<%=c%>][text]">
+		 			<%= @examples[c].text %>
+		 		</div>
+		 		<div class = "hidden col-md-8" id = "exampleText<%=c%>">
+		 			<%= g.text_area :text, class: 'form-control' %>
+		 		</div>
 
-	 	<div class = "row">
-	 		<div class = "col-md-8" data-attr-name= "Mechanic[exapmles][text][<%=c%>]">
-	 			<%= x.text %>
-	 		</div>
-	 		<div class = "col-md-4">
-	 			<%=image_tag x.thumbnail.url%>
-	 		</div>
-	 	</div>
-
+		 		<div class = "col-md-4" data-attr-name= "Mechanic[exapmles][<%=c%>][thumbnail]">
+		 			<%=image_tag @examples[c].thumbnail.url%>
+		 		</div>
+		 	</div>
+	 	<%else%>
+			<div class = "row hidden" id = <%="example#{c}"%> >
+				<div class = "col-md-12">
+					<%=g.text_field :title, :placeholder => "Game's Title", class:  'form-control'%>
+				</div>
+				<div class = "col-md-8">
+					<%=g.text_area :text, :placeholder => "descripe the instance here", class:  'form-control'%>
+				</div>
+				<div class = "col-md 4">
+					Insert a picture of the mechanic in the game
+					<%=g.file_field :thumbnail %>
+				</div>
+				<div class = "col-md-12">
+					<%=g.text_field :link, :placeholder => "Link to game", class:  'form-control'%>
+				</div>
+			</div>
+	 	<%end%>
+	 	
+	 	<%c = c +1%>
+	 <%end%>
+	 
+	 <%if @showLinkE %>
+	 	<a onclick="showExample(<%=@mechanic.examples.length%>);">Add Another Example</a>
 	 <%end%>
 	 
 	 <div class = "row">
@@ -71,13 +111,21 @@
 	<div class = "row">
 		<div class = "col-md-12">
 			<ul>
-				<% @keywords.each do |x| %>
-						<li><%=link_to x.title, '#' %></li>
+				 <%c = 0%>
+				 <%=f.fields_for :keywords do |g|%>
+						<%if @mechanic.keywords[c].title %>
+							<li><%=link_to @mechanic.keywords[c].title, '#' %></li>
+						<%else%>
+							<li class = "hidden" id = "keyword<%=c%>"><%=g.text_field :title %></li>
+						<%end%>
+						<%c = c +1%>
 				<%end%>
 			</ul>
 		</div>
 	</div>
-	
+	<%if @showLinkK %>
+	 	<a onclick="showKeyword(<%=@mechanic.keywords.length%>);">Add Another Keyword</a>
+	 <%end%>
 	<div class = "row">
  		<div class = "col-md-12 title">
  			Additional Information
@@ -86,10 +134,14 @@
 
  	<div class = "row">
 	 	<ul>
-			<% @notes.each do |x| %>
-				<li>
-					<%= x.text %>
-				</li>
+			<%c = 0%>
+			<%=f.fields_for :notes do |g|%>
+				<%if @mechanic.notes[c].text %>
+					<li><%=link_to @mechanic.notes[c].text, '#' %></li>
+				<%else%>
+					<li class = "hidden" id = "note<%=c%>"><%=g.text_field :text, :placeholder => "Add Note", class:  'form-control'%></li>
+				<%end%>
+				<%c = c +1%>
 			<%end%>
 			<% @examples.each do |x| %>
 				<li>
@@ -97,7 +149,9 @@
 				</li>
 			<%end%>
 		</ul> 
-
+	<%if @showLinkN %>
+	 	<a onclick="showNote(<%=@mechanic.notes.length%>);">Add Another Keyword</a>
+	 <%end%>
 	</div>
 	<%=f.submit "create mechanic", class: "hidden btn btn-primary", id: "button"%>
 
