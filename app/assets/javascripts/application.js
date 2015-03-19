@@ -17,7 +17,7 @@
 
 function showExample(x)
 {
-	console.log("called");
+	
 	for (var i = 1; i < x; i++) 
 	{
 		var id ="example";
@@ -87,19 +87,23 @@ function showNote(x)
 
 */
 $(document).ready(function(){
+    var lastClicked;
     $("div").click(function(){
         $this = $(this);
+
         //console.log($this);
         switch($this.attr("data-attr-name"))
         {
         	case "Mechanic[text]":
         	var text = document.getElementById("description");
-        	$this.addClass( "hidden" );
+        	//$this.addClass( "hidden" );
+        	$this.hide();
         	text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
         	//text.children("textarea").height( $("textarea")[0].scrollHeight );
 
         	$("#description textarea").height("200px");
         	$("#description textarea").focus();
+        	lastClicked = $(this)
         	break;
 
         	case "Mechanic[exapmles][0][text]":
@@ -108,7 +112,6 @@ $(document).ready(function(){
 			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
 			$("#exampleText0 textarea").css( "min-height", "300px" );
 			$("#exampleText0 textarea").focus();
-
 			break;
 
 			case "Mechanic[exapmles][1][text]":
@@ -137,12 +140,33 @@ $(document).ready(function(){
 
         }
     });
+    
     $("textarea").focusout(function() {
-  	if ( !$('textarea').is(':focus'))
-  	{
-  		$(".btn").trigger( "click" );
+    	var text = $(this).text();
+    	var parent = $(this).parent().attr("id");
+    	//lastClicked.html() = text;
+    	lastClicked.show();
+    	$(this).hide();
+    	//lastClicked.className = lastClicked.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+    	//lastClicked.text = text;
+    	//$(this).addClass("hidden");
+
+    	/*if(parent.indexOf("example") != -1)
+    	{
+    		//console.log($(this).parent().attr("id"));
+    		if(parent.indexOf("Text") != -1)
+    		{
+    			var id = "[example]["+ parent.match(/\d+/g)+"][Text]";
+    			//console.log(id);
+
+    		}
+    	}
+    	else
+    		console.log(parent.indexOf("example"));
+		*/
+
+  		//$(".btn").trigger( "click" );
   		//console.log($(".button"));
-    }
   });
 
 });

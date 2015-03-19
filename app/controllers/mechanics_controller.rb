@@ -156,7 +156,7 @@ class MechanicsController < ApplicationController
 			while @mechanic.notes.length < @no do
 				@mechanic.notes.build
 			end
-			byebug
+			#byebug
 			render 'new'
 		end
 
@@ -192,11 +192,12 @@ class MechanicsController < ApplicationController
 
 	def update
 		@mechanic = Mechanic.find(params[:id])
-		#byebug
-		if @mechanic.update(text: params[:mechanic][:text])
+		byebug
+		@mechanic.assign_attributes({ :text => params[:mechanic][:text]})
+		if @mechanic.save
+			@mechanic.save!
 			redirect_to @mechanic
 		else
-			@mechanic = Mechanic.find(params[:id])
 			@name = @mechanic.name
 			@description = @mechanic.text
 			@examples = @mechanic.examples
@@ -204,8 +205,21 @@ class MechanicsController < ApplicationController
 			@keywords = @mechanic.keywords
 			@notes = @mechanic.notes
 			@canEdit = authorized
+			@showLinkE = false
+			@showLinkK = false
+			@showLinkN = false
+			@ex = @examples.length
 			(5-@examples.length).times do 
 				@mechanic.examples.build
+				@showLinkE = true
+			end
+			(5-@keywords.length).times do 
+				@mechanic.keywords.build
+				@showLinkK = true
+			end
+			(5-@notes.length).times do 
+				@mechanic.notes.build
+				@showLinkN = true
 			end
 			render 'show'
 		end
