@@ -1,0 +1,8 @@
+<div class = "title">
+	<%=@keyword.title%>
+</div>
+<ul>
+	<%@links.each do |x|%>
+			<li><%=link_to x.name, x%></li>
+	<%end%>
+</ul>

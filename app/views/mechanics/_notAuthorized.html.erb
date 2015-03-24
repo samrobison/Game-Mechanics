@@ -23,19 +23,21 @@
  		</div>
  	</div>
  	<% @examples.each do |x| %>
-		 <div class = "row">
-	 		<div class = "col-md-12 subTitle">
-	 			<%= x.title %>
-	 		</div>
-	 	</div>
-	 	<div class = "row">
-	 		<div class = "col-md-8">
-	 			<%= x.text %>
-	 		</div>
-	 		<div class = "col-md-4">
-	 			<%=image_tag x.thumbnail.url%>
-	 		</div>
-	 	</div>
+		<%if x.title != nil%> 
+			 <div class = "row">
+		 		<div class = "col-md-12 subTitle">
+		 			<%= x.title %>
+		 		</div>
+		 	</div>
+		 	<div class = "row">
+		 		<div class = "col-md-8">
+		 			<%= x.text %>
+		 		</div>
+		 		<div class = "col-md-4">
+		 			<%=image_tag x.thumbnail.url%>
+		 		</div>
+		 	</div>
+	 	<%end%>
 	 <%end%>
 	 
 	 <div class = "row">
@@ -47,9 +49,11 @@
 	 <div class = "row">
 	 	<ul>
 			<% @related.each do |x| %>
-				<li>
-					<%= link_to x.title, x.mechanic %>
-				</li>
+				<%if x.title != nil%>
+					<li>
+						<%= link_to x.title, x.mechanic %>
+					</li>
+				<%end%>
 			<%end%>
 		</ul>
 	</div>
@@ -64,7 +68,9 @@
 		<div class = "col-md-12">
 			<ul>
 				<% @keywords.each do |x| %>
-						<li><%=link_to x.title, '#' %></li>
+						<%if x.title != nil %>
+							<li><%=link_to x.title, x %></li>
+						<%end%>
 				<%end%>
 			</ul>
 		</div>
@@ -79,14 +85,18 @@
  	<div class = "row">
 	 	<ul>
 			<% @notes.each do |x| %>
-				<li>
-					<%= x.text %>
-				</li>
+				<%if x.text != nil%>
+					<li>
+						<%= x.text %>
+					</li>
+				<%end%>
 			<%end%>
 			<% @examples.each do |x| %>
-				<li>
-					<a href= <%=x.text%> > <%= "learn more about #{x.title} here!"%> </a>
-				</li>
+				<%if x.text != nil%>
+					<li>
+						<a href= <%=x.text%> > <%= "learn more about #{x.title} here!"%> </a>
+					</li>
+				<%end%>
 			<%end%>
 		</ul> 
 

@@ -103,8 +103,9 @@ $(document).ready(function(){
 
         	$("#description textarea").height("200px");
         	$("#description textarea").focus();
-        	lastClicked = $(this)
+        	lastClicked = $this;
         	break;
+
 
         	case "Mechanic[exapmles][0][text]":
 			var text = document.getElementById("exampleText0");
@@ -117,57 +118,46 @@ $(document).ready(function(){
 			case "Mechanic[exapmles][1][text]":
 			var text = document.getElementById("exampleText1");
 			$this.addClass("hidden");
+			$("#exampleText1 textarea").css( "min-height", "300px" );
+			$("#exampleText1 textarea").focus();
 			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
 			break;
 
 			case "Mechanic[exapmles][2][text]":
 			var text = document.getElementById("exampleText2");
 			$this.addClass("hidden");
+			$("#exampleText2 textarea").css( "min-height", "300px" );
+			$("#exampleText2 textarea").focus();
 			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
 			break;
 
 			case "Mechanic[exapmles][3][text]":
 			var text = document.getElementById("exampleText3");
 			$this.addClass("hidden");
+			$("#exampleText3 textarea").css( "min-height", "300px" );
+			$("#exampleText3 textarea").focus();
 			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
 			break;
 
 			case "Mechanic[exapmles][4][text]":
 			var text = document.getElementById("exampleText4");
-			$this.addClass("hidden");
+			$("#exampleText4 textarea").css( "min-height", "300px" );
+			$("#exampleText4 textarea").focus();
 			text.className = text.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
 			break;
 
         }
     });
     
-    $("textarea").focusout(function() {
+    /*$("textarea").focusout(function() {
     	var text = $(this).text();
     	var parent = $(this).parent().attr("id");
-    	//lastClicked.html() = text;
     	lastClicked.show();
+    	console.log(text);
+    	lastClicked.text(text);
     	$(this).hide();
-    	//lastClicked.className = lastClicked.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
-    	//lastClicked.text = text;
-    	//$(this).addClass("hidden");
 
-    	/*if(parent.indexOf("example") != -1)
-    	{
-    		//console.log($(this).parent().attr("id"));
-    		if(parent.indexOf("Text") != -1)
-    		{
-    			var id = "[example]["+ parent.match(/\d+/g)+"][Text]";
-    			//console.log(id);
-
-    		}
-    	}
-    	else
-    		console.log(parent.indexOf("example"));
-		*/
-
-  		//$(".btn").trigger( "click" );
-  		//console.log($(".button"));
-  });
+  });*/
 
 });
 

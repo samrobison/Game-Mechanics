@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  #get 'keywords/show/'
+
   get 'static_pages/about'
   get 'static_pages/home'
   get 'static_pages/help'
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 
   resources :mechanics
+  resources :keywords, only: [:show]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

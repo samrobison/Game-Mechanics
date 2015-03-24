@@ -192,7 +192,29 @@ class MechanicsController < ApplicationController
 
 	def update
 		@mechanic = Mechanic.find(params[:id])
-		byebug
+		#byebug
+		params[:mechanic][:examples_attributes].each do |k,x|
+			if x[:title] == "" && x[:text] == "" && x[:link] = "" && !x[:thumbnail] #&& params[:mechanic][:examples_attributes].length >= 1
+				byebug
+				params[:mechanic][:examples_attributes].delete(k)
+			end
+		end
+
+		if params[:mechanic][:keywords_attributes]
+			params[:mechanic][:keywords_attributes].each do |k,x|
+				if x[:title] == ""
+					params[:mechanic][:keywords_attributes].delete(k)
+				end
+			end
+		end
+		
+		if params[:mechanic][:notes_attributes]
+			params[:mechanic][:notes_attributes].each do |k,x|
+				if x[:text] == ""
+					params[:mechanic][:notes_attributes].delete(k)
+				end
+			end
+		end
 		@mechanic.assign_attributes({ :text => params[:mechanic][:text]})
 		if @mechanic.save
 			@mechanic.save!

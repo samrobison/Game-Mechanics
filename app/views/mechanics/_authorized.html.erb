@@ -114,7 +114,7 @@
 				 <%c = 0%>
 				 <%=f.fields_for :keywords do |g|%>
 						<%if @mechanic.keywords[c].title %>
-							<li><%=link_to @mechanic.keywords[c].title, '#' %></li>
+							<li><%=link_to @mechanic.keywords[c].title, @mechanic.keywords[c] %></li>
 						<%else%>
 							<li class = "hidden" id = "keyword<%=c%>"><%=g.text_field :title %></li>
 						<%end%>
@@ -136,7 +136,7 @@
 	 	<ul>
 			<%c = 0%>
 			<%=f.fields_for :notes do |g|%>
-				<%if @mechanic.notes[c].text %>
+				<%if @mechanic.notes[c].text  %>
 					<li><%=link_to @mechanic.notes[c].text, '#' %></li>
 				<%else%>
 					<li class = "hidden" id = "note<%=c%>"><%=g.text_field :text, :placeholder => "Add Note", class:  'form-control'%></li>
@@ -144,16 +144,18 @@
 				<%c = c +1%>
 			<%end%>
 			<% @examples.each do |x| %>
-				<li>
-					<a href= <%=x.text%> > <%= "learn more about #{x.title} here!"%> </a>
-				</li>
+				<%if x.title != "" && x.title != nil %>
+					<li>
+						<a href= <%=x.text%> > <%= "learn more about #{x.title} here!"%> </a>
+					</li>
+				<%end%>
 			<%end%>
 		</ul> 
 	<%if @showLinkN %>
 	 	<a onclick="showNote(<%=@mechanic.notes.length%>);">Add Another Note</a>
 	 <%end%>
 	</div>
-	<%=f.submit "create mechanic", class: "hidden btn btn-primary", id: "button"%>
+	<%=f.submit "Commit Changes", class: "btn btn-primary", id: "button"%>
 
 <%end%>
 
