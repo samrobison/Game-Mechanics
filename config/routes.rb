@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post 'search/results'
+
   #get 'keywords/show/'
 
   get 'static_pages/about'

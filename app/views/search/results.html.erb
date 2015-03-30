@@ -1,0 +1,14 @@
+<h1>Results</h1>
+<%if @foundSomething%>
+	<ul>
+		<%@mechanics.each do |x|%>
+		<li><%=link_to x.name, x%></li>
+		<%end%>
+		<%@keys.each do |x|%>
+		<li><%=link_to x.title, x%></li>
+		<%end%>
+	<ul>
+<%else%>
+<p> No Results Found, </p>
+<%end%>
+

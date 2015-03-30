@@ -96,9 +96,12 @@ class MechanicsController < ApplicationController
 			if Keyword.where(title: @mechanic.keywords[0][:title]).length != 0
 				 temp = @mechanic.keywords[0][:title]
 				 @mechanic.keywords.delete(@mechanic.keywords[0])
-				 @mechanic.keywords.push(Keyword.where(title: temp).first)
+				 key = Keyword.where(title: temp).first
+				 @mechanic.keywords.push(key)
+				 #key.mechanics.push(@mechanic)
 			end
 		end
+		#byebug
 		#do the same for related mechanics
 		#for i in 0..(@mechanic.related_mechanics.length -1)
 		(0..((@mechanic.related_mechanics.length) -1)).each do |i|
@@ -115,10 +118,18 @@ class MechanicsController < ApplicationController
 			end		
 		end
 					
-		#add existing related mechanics to the mechan
+		#add assiation for  keywords
+			@mechanic.keywords.each do |x|
+				x.mechanics.push(@mechanic)
+			end
+			#add existing related mechanics to the mechan
 		if @mechanic.save
+		
 			@mechanic.save!
-
+			(@mechanic.keywords.length).times do |x|
+				@mechanic.keywords[x].mechanics.push(@mechanic)
+			end
+		
 			redirect_to @mechanic
 		else
 			#clear out keywords 
