@@ -2,7 +2,8 @@ class KeywordsController < ApplicationController
 
 def show
 	@keyword = Keyword.find(params[:id])
-	@links = @keyword.mechanics
+	#cheating
+	@keys = Keyword.where{title =~ my{@keyword.title}}
 end
 
 end

@@ -2,7 +2,9 @@
 	<%=@keyword.title%>
 </div>
 <ul>
-	<%@links.each do |x|%>
-			<li><%=link_to x.name, x%></li>
+	<%@keys.each do |x|%>
+			<%x.mechanics.each do |y|%>
+				<li><%=link_to y.name, y%></li>
+			<%end%>
 	<%end%>
 </ul>

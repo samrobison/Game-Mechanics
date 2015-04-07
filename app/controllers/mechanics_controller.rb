@@ -47,14 +47,6 @@ class MechanicsController < ApplicationController
 	end
 	
 	def create
-		#select array for related mechanics just in case it fails 
-		mechies = Mechanic.all
-		@array = Array.new
-		@array.push(["N/A", 0])
-		
-		mechies.each do |x|
-			@array.push([x.name, x.name])
-		end
 		
 		#clear out blank entries from the mechanic
 		params[:mechanic][:examples_attributes].each do |k,x|
@@ -90,20 +82,7 @@ class MechanicsController < ApplicationController
 		#create mechanic  
 		@mechanic = Mechanic.new(params[:mechanic].permit!)
 	
-
-		#add existing keywords to array and delete them so they aren't made twice
-		(0..((@mechanic.keywords.length) -1)).each do |i|
-			if Keyword.where(title: @mechanic.keywords[0][:title]).length != 0
-				 temp = @mechanic.keywords[0][:title]
-				 @mechanic.keywords.delete(@mechanic.keywords[0])
-				 key = Keyword.where(title: temp).first
-				 @mechanic.keywords.push(key)
-				 #key.mechanics.push(@mechanic)
-			end
-		end
-		#byebug
-		#do the same for related mechanics
-		#for i in 0..(@mechanic.related_mechanics.length -1)
+		#link related mechanics
 		(0..((@mechanic.related_mechanics.length) -1)).each do |i|
 			if Mechanic.where(name: @mechanic.related_mechanics[i][:title]).length != 0
 				@mechanic.related_mechanics[i].mechanic = Mechanic.where(name: @mechanic.related_mechanics[i][:title]).first
@@ -111,27 +90,27 @@ class MechanicsController < ApplicationController
 				@mechanic.related_mechanics[i] = nil
 			end
 		end
-		#clear nill entries
-		@mechanic.related_mechanics.each do |x|
-			unless x
-				@mechanic.related_mechanics.delete(x)
-			end		
-		end
+	
 					
-		#add assiation for  keywords
+		#add association for  keywords
 			@mechanic.keywords.each do |x|
-				x.mechanics.push(@mechanic)
+				x.mechanic = @mechanic
 			end
-			#add existing related mechanics to the mechan
+			#add existing related mechanics to the mechanic
+			byebug
 		if @mechanic.save
-		
 			@mechanic.save!
-			(@mechanic.keywords.length).times do |x|
-				@mechanic.keywords[x].mechanics.push(@mechanic)
-			end
-		
 			redirect_to @mechanic
 		else
+			#select array for related mechanics just in case it fails 
+			mechies = Mechanic.all
+			@array = Array.new
+			@array.push(["N/A", 0])
+		
+			mechies.each do |x|
+				@array.push([x.name, x.name])
+			end
+
 			#clear out keywords 
 			(0..((@mechanic.keywords.length) -1)).each do |i|
 			 	 @mechanic.keywords.push(Keyword.new( title: @mechanic.keywords[0][:title]))

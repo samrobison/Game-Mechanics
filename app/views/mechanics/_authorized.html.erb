@@ -58,7 +58,7 @@
 		 		</div>
 
 		 		<div class = "col-md-4" data-attr-name= "Mechanic[exapmles][<%=c%>][thumbnail]">
-		 			<%=image_tag @examples[c].thumbnail.url%>
+		 			<%=image_tag @examples[c].thumbnail.url(:medium) %>
 		 		</div>
 		 	</div>
 	 	<%else%>
