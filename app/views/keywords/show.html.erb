@@ -3,8 +3,6 @@
 </div>
 <ul>
 	<%@keys.each do |x|%>
-			<%x.mechanics.each do |y|%>
-				<li><%=link_to y.name, y%></li>
-			<%end%>
+		<li><%=link_to x.mechanic.name, x.mechanic%></li>
 	<%end%>
 </ul>

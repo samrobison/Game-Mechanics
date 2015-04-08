@@ -90,16 +90,17 @@ class MechanicsController < ApplicationController
 				@mechanic.related_mechanics[i] = nil
 			end
 		end
-	
 					
-		#add association for  keywords
-			@mechanic.keywords.each do |x|
-				x.mechanic = @mechanic
-			end
 			#add existing related mechanics to the mechanic
-			byebug
+			
 		if @mechanic.save
 			@mechanic.save!
+			5.times do |x|
+				if @mechanic.keywords[x]
+					@mechanic.keywords[x].mechanic_id = @mechanic.id
+					@mechanic.keywords[x].save!
+				end
+			end
 			redirect_to @mechanic
 		else
 			#select array for related mechanics just in case it fails 
@@ -155,6 +156,10 @@ class MechanicsController < ApplicationController
 
 	def show
 		@mechanic = Mechanic.find(params[:id])
+		
+		
+		@mechanic.save!
+
 		@name = @mechanic.name
 		@description = @mechanic.text
 		@examples = @mechanic.examples
@@ -178,6 +183,8 @@ class MechanicsController < ApplicationController
 			@mechanic.notes.build
 			@showLinkN = true
 		end
+
+
 	end
 
 	def update
@@ -185,7 +192,6 @@ class MechanicsController < ApplicationController
 		#byebug
 		params[:mechanic][:examples_attributes].each do |k,x|
 			if x[:title] == "" && x[:text] == "" && x[:link] = "" && !x[:thumbnail] #&& params[:mechanic][:examples_attributes].length >= 1
-				byebug
 				params[:mechanic][:examples_attributes].delete(k)
 			end
 		end
@@ -205,7 +211,15 @@ class MechanicsController < ApplicationController
 				end
 			end
 		end
-		@mechanic.assign_attributes({ :text => params[:mechanic][:text]})
+		@mechanic.assign_attributes(params[:mechanic].permit!)
+		
+		5.times do |x|
+			if @mechanic.keywords[x]
+				@mechanic.keywords[x].mechanic_id = @mechanic.id
+				@mechanic.keywords[x].save!
+			end
+		end
+		
 		if @mechanic.save
 			@mechanic.save!
 			redirect_to @mechanic

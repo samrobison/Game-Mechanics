@@ -1,5 +1,5 @@
 class Keyword < ActiveRecord::Base
-	has_one :mechanic, class_name: "Mechanic"
+	belongs_to :mechanic, class_name: "Mechanic"
 
 	validates :title, presence: true
 

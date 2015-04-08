@@ -1,5 +1,7 @@
 class Example < ActiveRecord::Base
 	validates :text, presence: true
+	validates :title, presence: true
+	validates :link, presence: true
 	#paperclip
 	#attr_accessible :thumbnail
   	has_attached_file :thumbnail, :styles => { :medium => "300x300>" }, :default_url => "/images/:style/missing.png"
